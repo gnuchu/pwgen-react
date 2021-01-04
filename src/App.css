@@ -25,13 +25,26 @@ h3 {
 }
 
 .title {
-  margin: 50px 0px 50px 0px;
+  margin: 25 0px 25 0px;
 }
 
 .password-input {
-  margin: 20px 0px 20px 0px;
+  margin: 10px 0px 10px 0px;
 }
 
 .password-box {
   margin: 0 auto;
+}
+
+.col {
+  width:100%;
+}
+
+.checkBoxes {
+  margin: 20px 0px 20px 0px;
+  /* border: 1px dotted grey; */
+}
+
+.input-box-center {
+  text-align: center;
 }
