@@ -28,8 +28,8 @@ h3 {
   margin: 25 0px 25 0px;
 }
 
-.password-input {
-  margin: 10px 0px 10px 0px;
+.input-margins {
+  margin: 20px 0px 20px 0px;
 }
 
 .password-box {
@@ -42,9 +42,18 @@ h3 {
 
 .checkBoxes {
   margin: 20px 0px 20px 0px;
-  /* border: 1px dotted grey; */
+  border: 1px dotted grey;
 }
 
 .input-box-center {
   text-align: center;
+}
+
+.jumbotron {
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.debug-border {
+  border: 1px dotted grey;
 }
