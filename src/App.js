@@ -15,7 +15,7 @@ const initialState = {
   upper: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
   lower: ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'],
   numbers: ['0','1','2','3','4','5','6','7','8','9'],
-  special: ['!','@','£','$','^','-','_','+','=','|',':',';','<','>','~'],
+  special: ['!', '$', '@', '&', '?', '*', '^'], 
   allChars: [],
   length: 20,
   useUpper: true,
@@ -184,8 +184,9 @@ class App extends React.Component {
                         className="form-control input-box-center input-margins"
                         placeholder="Password" 
                         aria-label="Password"
-                        value={this.state.password}
-                        onFocus={(event) => this.handleFocus(event)}
+                        value={ this.state.password }
+                        onFocus={ (event) => this.handleFocus(event) }
+                        onMouseUp={ (event) => event.preventDefault() }
                         readOnly>
                       </input>
 
