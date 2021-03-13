@@ -3,6 +3,6 @@ import App from './App';
 
 test('Renders Site', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Password Generator/i);
+  const linkElement = screen.getByText("Pass phrase generator");
   expect(linkElement).toBeInTheDocument();
 });

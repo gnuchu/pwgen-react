@@ -79,6 +79,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <h1 className="display-4 mb-3">Pass phrase generator</h1>
         <div className="form-group input-group">
           <input 
             id="password-box"
@@ -92,7 +93,7 @@ class App extends React.Component {
             readOnly>
           </input>
 
-          <div className="btn-group shadow" role="group" aria-label="Buttons">
+          <div className="btn-group" role="group" aria-label="Buttons">
             <button 
               type="button" 
               className="btn btn-primary has-icon"
