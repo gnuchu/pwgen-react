@@ -31,7 +31,7 @@ class App extends React.Component {
   }
 
   getNewPassword() {
-    const url = `http://localhost:3001/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}`
+    const url = `http://68.183.37.68:3001/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}`
     fetch(url)
     .then(res => res.json())
     .then(
