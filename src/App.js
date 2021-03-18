@@ -5,7 +5,6 @@ import './App.css';
 let copyButtonUnchecked = "<i class='bi bi-clipboard'></i>"
 let copyButtonChecked = "<i class='bi bi-clipboard-check'></i>"
 
-
 class App extends React.Component {
 
   constructor(props) {
@@ -15,7 +14,8 @@ class App extends React.Component {
       capitalise: true,
       numbers: false,
       spaces: true,
-      special: false
+      special: false,
+      strength: null
     }
   }
 
@@ -32,13 +32,18 @@ class App extends React.Component {
 
   getNewPassword() {
     const url = `https://qasxed.uk:8443/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}`
+    const zxcvbn = require('zxcvbn');
+
     fetch(url)
     .then(res => res.json())
     .then(
       (result) => {
+        var strength = zxcvbn(result.passphrase);
+
         this.setState({
           isLoaded: true,
-          password: result.passphrase
+          password: result.passphrase,
+          strength: strength.crack_times_display.offline_fast_hashing_1e10_per_second
         });
       },
       (error) => {
@@ -143,58 +148,59 @@ class App extends React.Component {
 
                 <i className="bi bi-clipboard"></i>
               </button>
-
             </div>
           </div>
-          <div className="row">
-            <div className="form-group input-group">
-              
-              <div className="form-check form-check-inline">
-                <input 
-                  className="form-check-input" 
-                  type="checkbox" 
-                  id="capitaliseCheckbox"
-                  onChange={this.onChangeCapitalise}
-                  checked={this.state.capitalise}/>
+        </div>
+        <div className="row">
+          <div className="form-group input-group">
+            <div className="form-check form-check-inline">
+              <input 
+                className="form-check-input" 
+                type="checkbox" 
+                id="capitaliseCheckbox"
+                onChange={this.onChangeCapitalise}
+                checked={this.state.capitalise}/>
 
-                <label className="form-check-label" htmlFor="capitaliseCheckbox">Capitalise</label>
-              </div>
-
-              <div className="form-check form-check-inline">
-                <input 
-                  className="form-check-input" 
-                  type="checkbox" 
-                  id="spacesCheckbox"
-                  onChange={this.onChangeSpaces}
-                  checked={this.state.spaces}/>
-
-                <label className="form-check-label" htmlFor="spacesCheckbox">Spaces</label>
-              </div>
-
-              <div className="form-check form-check-inline">
-                <input 
-                  className="form-check-input" 
-                  type="checkbox" 
-                  id="numbersCheckbox" 
-                  onChange={this.onChangeNumbers}
-                  checked={this.state.numbers}/>
-
-                <label className="form-check-label" htmlFor="numbersCheckbox">Numbers</label>
-              </div>
-
-              <div className="form-check form-check-inline">
-                <input 
-                  className="form-check-input" 
-                  type="checkbox" 
-                  id="specialCheckbox"
-                  onChange={this.onChangeSpecial}
-                  checked={this.state.special}/>
-
-                <label className="form-check-label" htmlFor="specialCheckbox">Special</label>
-              </div>
-
-
+              <label className="form-check-label" htmlFor="capitaliseCheckbox">Capitalise</label>
             </div>
+
+            <div className="form-check form-check-inline">
+              <input 
+                className="form-check-input" 
+                type="checkbox" 
+                id="spacesCheckbox"
+                onChange={this.onChangeSpaces}
+                checked={this.state.spaces}/>
+
+              <label className="form-check-label" htmlFor="spacesCheckbox">Spaces</label>
+            </div>
+
+            <div className="form-check form-check-inline">
+              <input 
+                className="form-check-input" 
+                type="checkbox" 
+                id="numbersCheckbox" 
+                onChange={this.onChangeNumbers}
+                checked={this.state.numbers}/>
+
+              <label className="form-check-label" htmlFor="numbersCheckbox">Numbers</label>
+            </div>
+
+            <div className="form-check form-check-inline">
+              <input 
+                className="form-check-input" 
+                type="checkbox" 
+                id="specialCheckbox"
+                onChange={this.onChangeSpecial}
+                checked={this.state.special}/>
+
+              <label className="form-check-label" htmlFor="specialCheckbox">Special</label>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <a target="_new" href="https://github.com/dropbox/zxcvbn">Crack time: </a><em>{this.state.strength}</em>
           </div>
         </div>
       </div>
