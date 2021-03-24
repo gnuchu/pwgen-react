@@ -1,10 +1,22 @@
-//import logo from './logo.svg';
 import React from 'react';
 import './App.css';
 
-let copyButtonUnchecked = "<i class='bi bi-clipboard'></i>"
-let copyButtonChecked = "<i class='bi bi-clipboard-check'></i>"
+const LOCALTESTING = 0;
 
+let copyButtonUnchecked = "<i class='bi bi-clipboard'></i>";
+let copyButtonChecked = "<i class='bi bi-clipboard-check'></i>";
+
+const options = [
+  { value: 1, label: '1' },
+  { value: 2, label: '2' },
+  { value: 3, label: '3' },
+  { value: 4, label: '4' },
+  { value: 5, label: '5' },
+  { value: 6, label: '6' },
+  { value: 7, label: '7' },
+  { value: 8, label: '8' },
+  { value: 9, label: '9' },
+]
 class App extends React.Component {
 
   constructor(props) {
@@ -15,7 +27,8 @@ class App extends React.Component {
       numbers: false,
       spaces: true,
       special: false,
-      strength: null
+      strength: null,
+      numberOfWords: 4
     }
   }
 
@@ -31,7 +44,15 @@ class App extends React.Component {
   }
 
   getNewPassword() {
-    const url = `https://qasxed.uk:8443/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}`
+    var url = ""
+
+    if( LOCALTESTING ) {
+      url = `http://localhost:3001/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}`
+    }
+    else {
+      url = `https://qasxed.uk:8443/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}`
+    }
+    
     const zxcvbn = require('zxcvbn');
 
     fetch(url)
@@ -72,6 +93,15 @@ class App extends React.Component {
       copiedButton.innerHTML = copyButtonUnchecked
     }, 2000);
 
+  }
+
+  onNumberChange = event => {
+    this.setState({
+      numberOfWords: event.target.value
+    },
+    () => {
+      this.getNewPassword();
+    })
   }
   
   onChangeCapitalise = (event) => {
@@ -196,6 +226,17 @@ class App extends React.Component {
 
               <label className="form-check-label" htmlFor="specialCheckbox">Special</label>
             </div>
+
+            <div className="">
+              <select
+                value={this.state.numberOfWords}
+                onChange={this.onNumberChange}
+                className="form-select form-select-sm">
+
+                {options.map(({ value, label }, index) => <option value={value} key={value}>{label}</option>)}
+              </select>
+            </div>
+
           </div>
         </div>
         <div className="row">

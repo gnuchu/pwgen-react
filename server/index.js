@@ -32,12 +32,8 @@ function newPassphrase(params) {
   const capitalise = stringToBool(params.capitalise)
   const numbers = stringToBool(params.numbers)
   const special = stringToBool(params.special)
-  let number_of_words = 4
+  let number_of_words = parseInt(params.words)
   
-  if(numbers || special) {
-    number_of_words = 3
-  }
-
   for(i=0; i<number_of_words; i++) {
     j = localRandom(words.words.length)
     
