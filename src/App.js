@@ -28,6 +28,7 @@ class App extends React.Component {
       spaces: true,
       special: false,
       strength: null,
+      freeformStrength: null,
       numberOfWords: 4
     }
   }
@@ -74,6 +75,17 @@ class App extends React.Component {
         });
       }
     )
+  }
+  
+  handleFreeformChange = (event) => {
+    const zxcvbn = require('zxcvbn');
+    var strength = zxcvbn(event.target.value);
+    console.log(event);
+
+    this.setState({
+      freeformStrength: strength.crack_times_display.offline_fast_hashing_1e10_per_second
+    });
+
   }
 
   handleFocus = (event) => {
@@ -143,7 +155,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1 className="display-4 mb-3">Pass phrase generator</h1>
+        <h1 className="display-4 mb-3">Generate</h1>
         <div className="row">
           <div className="form-group input-group">
             <input 
@@ -239,9 +251,44 @@ class App extends React.Component {
 
           </div>
         </div>
+        
         <div className="row">
           <div className="col">
             <a target="_new" href="https://github.com/dropbox/zxcvbn">Crack time: </a><em>{this.state.strength}</em>
+          </div>
+        </div>
+
+        <p></p>
+        <h1 className="display-4 mb-3">Check</h1>
+        <div className="row">
+          <div className="form-group input-group">
+            <input
+              id="password-box-freeform"
+              type="text"
+              className="form-control form-control-lg"
+              placeholder="Password"
+              aria-label="Password"
+              onFocus={(event) => this.handleFocus(event)}
+              onMouseUp={(event) => event.preventDefault()}
+              onKeyPress={(event) => this.handleFreeformChange(event)}>
+            </input>
+
+            <div className="btn-group" role="group" aria-label="Buttons">
+              <button
+                type="button"
+                className="btn btn-secondary has-icon"
+                id="copy-button"
+                aria-label="Copy phrase"
+                onClick={this.copyPassword}>
+
+                <i className="bi bi-clipboard"></i>
+              </button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <a target="_new" href="https://github.com/dropbox/zxcvbn">Crack time: </a><em>{this.state.freeformStrength}</em>
+            </div>
           </div>
         </div>
       </div>

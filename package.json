@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^4.5.3",
     "bootstrap-icons": "^1.4.0",
+    "concurrently": "^6.2.0",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
     "popper": "^1.0.1",
@@ -23,6 +24,9 @@
   },
   "scripts": {
     "start": "( node server/index.js & ) && react-scripts start",
+    "frontend": "react-scripts start",
+    "backend": "node server/index.js",
+    "startw": "concurrently \"yarn run backend\" \"yarn run frontend\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
