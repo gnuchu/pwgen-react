@@ -17,6 +17,13 @@ const options = [
   { value: 8, label: '8' },
   { value: 9, label: '9' },
 ]
+
+function passwordStrength(password) {
+  const zxcvbn = require('zxcvbn');
+  var strength = zxcvbn(password);
+  return strength;
+}
+
 class App extends React.Component {
 
   constructor(props) {
@@ -53,14 +60,12 @@ class App extends React.Component {
     else {
       url = `https://qasxed.uk:8443/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}`
     }
-    
-    const zxcvbn = require('zxcvbn');
 
     fetch(url)
     .then(res => res.json())
     .then(
       (result) => {
-        var strength = zxcvbn(result.passphrase);
+        var strength = passwordStrength(result.passphrase);
 
         this.setState({
           isLoaded: true,
@@ -78,9 +83,7 @@ class App extends React.Component {
   }
   
   handleFreeformChange = (event) => {
-    const zxcvbn = require('zxcvbn');
-    var strength = zxcvbn(event.target.value);
-    console.log(event);
+    var strength = passwordStrength(event.target.value);
 
     this.setState({
       freeformStrength: strength.crack_times_display.offline_fast_hashing_1e10_per_second
@@ -105,6 +108,20 @@ class App extends React.Component {
       copiedButton.innerHTML = copyButtonUnchecked
     }, 2000);
 
+  }
+
+  copyDown = () => {
+    const passwordBox = document.getElementById("password-box");
+    const password = passwordBox.value;
+
+    const input = document.getElementById("password-box-freeform");
+    input.value = password;
+
+    var strength = passwordStrength(password);
+
+    this.setState({
+      freeformStrength: strength.crack_times_display.offline_fast_hashing_1e10_per_second
+    });
   }
 
   onNumberChange = event => {
@@ -190,6 +207,17 @@ class App extends React.Component {
 
                 <i className="bi bi-clipboard"></i>
               </button>
+
+              <button 
+                type="button" 
+                className="btn btn-info has-icon"
+                id="move-down-button"
+                aria-label="Copy password to other inout box"
+                onClick={this.copyDown}>
+
+                <i className="bi bi-arrow-down-circle"></i>
+              </button>
+
             </div>
           </div>
         </div>
