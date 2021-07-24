@@ -31,12 +31,12 @@ class App extends React.Component {
     this.state = {
       password: "",
       capitalise: true,
-      numbers: false,
-      spaces: true,
+      numbers: true,
+      spaces: false,
       special: false,
       strength: null,
       freeformStrength: null,
-      numberOfWords: 4
+      numberOfWords: 5
     }
   }
 
