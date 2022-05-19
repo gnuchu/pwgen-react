@@ -33,7 +33,7 @@ class App extends React.Component {
       capitalise: true,
       numbers: true,
       spaces: false,
-      special: false,
+      special: true,
       strength: null,
       freeformStrength: null,
       numberOfWords: 5
