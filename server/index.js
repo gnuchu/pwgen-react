@@ -15,8 +15,8 @@ app.use(function (req, res, next) {
 });
  
 const fs = require("fs");
-//const words = JSON.parse(fs.readFileSync("/var/www/pwgen-react/words.json", { encoding: 'utf8', flag: 'r' }))
-const words = JSON.parse(fs.readFileSync("words.json", { encoding: 'utf8', flag: 'r' }))
+const words = JSON.parse(fs.readFileSync("/var/www/pwgen-react/words.json", { encoding: 'utf8', flag: 'r' }))
+//const words = JSON.parse(fs.readFileSync("../words.json", { encoding: 'utf8', flag: 'r' }))
 function stringToBool(str) {
   return (str === 'true')
 } 
