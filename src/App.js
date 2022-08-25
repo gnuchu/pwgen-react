@@ -36,7 +36,8 @@ class App extends React.Component {
       special: true,
       strength: null,
       freeformStrength: null,
-      numberOfWords: 5
+      freeformPassword: "",
+      numberOfWords: 5,
     }
   }
 
@@ -81,15 +82,6 @@ class App extends React.Component {
       }
     )
   }
-  
-  handleFreeformChange = (event) => {
-    var strength = passwordStrength(event.target.value);
-
-    this.setState({
-      freeformStrength: strength.crack_times_display.offline_fast_hashing_1e10_per_second
-    });
-
-  }
 
   handleFocus = (event) => {
     event.target.select();
@@ -120,6 +112,7 @@ class App extends React.Component {
     var strength = passwordStrength(password);
 
     this.setState({
+      freeformPassword: password,
       freeformStrength: strength.crack_times_display.offline_fast_hashing_1e10_per_second
     });
   }
@@ -168,6 +161,17 @@ class App extends React.Component {
       this.getNewPassword();
     })
   }
+
+  handleFreeformChange = (event) => {
+
+    var strength = passwordStrength(event.target.value)
+
+    this.setState({
+      freeformPassword: event.target.value,
+      freeformStrength: strength.crack_times_display.offline_fast_hashing_1e10_per_second
+    })
+  }
+  
 
   render() {
     return (
@@ -276,13 +280,15 @@ class App extends React.Component {
                 {options.map(({ value, label }, index) => <option value={value} key={value}>{label}</option>)}
               </select>
             </div>
-
           </div>
         </div>
         
         <div className="row">
           <div className="col">
             <a target="_new" href="https://github.com/dropbox/zxcvbn">Crack time: </a><em>{this.state.strength}</em>
+          </div>
+          <div className='col'>
+            Length: {this.state.password.length}
           </div>
         </div>
 
@@ -296,6 +302,8 @@ class App extends React.Component {
               className="form-control form-control-lg"
               placeholder="Password"
               aria-label="Password"
+              value= {this.state.freeformPassword}
+              onChange={this.handleFreeformChange}
               onFocus={(event) => this.handleFocus(event)}
               onMouseUp={(event) => event.preventDefault()}
               onKeyPress={(event) => this.handleFreeformChange(event)}>
@@ -317,6 +325,9 @@ class App extends React.Component {
             <div className="col">
               <a target="_new" href="https://github.com/dropbox/zxcvbn">Crack time: </a><em>{this.state.freeformStrength}</em>
             </div>
+            <div className='col'>
+              Length: {this.state.freeformPassword.length}
+          </div>
           </div>
         </div>
       </div>
