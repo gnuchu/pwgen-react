@@ -29,7 +29,8 @@
     "startw": "concurrently \"yarn run backend\" \"yarn run frontend\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "release": "scripts/release.py"
   },
   "eslintConfig": {
     "extends": [
