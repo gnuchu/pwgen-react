@@ -5,6 +5,7 @@ import pathlib
 import sys
 from zipfile import ZipFile
 import subprocess
+import json
 
 def main(release_number):
     project_root = pathlib.Path.cwd()
@@ -34,11 +35,15 @@ def main(release_number):
     command += "-F draft=false "
     command += "-F prerelease=false "
     command += "-F generate_release_notes=false "
-    print(command)
 
-    result = os.system(command)
+    try:
+        result = os.system(command)
+        j = json.loads(result)
+    except Exception as e:
+        raise(e)
 
-    print(result)
+    print(j)
+    
 
 if __name__ == "__main__":
     release_number = sys.argv[1]
