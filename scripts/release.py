@@ -4,13 +4,18 @@ import os
 import pathlib
 import sys
 from zipfile import ZipFile
-import subprocess
 import json
 
 def main(release_number):
     project_root = pathlib.Path.cwd()
     build_directory = "build"
     release_directory = os.path.join(project_root, "releases")
+    
+    try:
+        token = os.environ['GITHUB_TOKEN']
+    except:
+        raise("Github token not available")
+    
 
     version = f"v1.0.{release_number}"
     release_name = f"pwgen_react_{version}.zip"
@@ -37,13 +42,30 @@ def main(release_number):
     command += "-F generate_release_notes=false "
 
     try:
-        result = os.system(command)
-        j = json.loads(result)
+        result = os.popen(command).read()
+        release_info = json.loads(result)
     except Exception as e:
         raise(e)
 
-    print(j)
+    release_id = release_info['id']
+    upload_url = release_info['upload_url']
+    target = f"/repos/gnuchu/pwgen-react/releases/{release_id}/assets?name={release_name}"
+
+    command = ""
+    command += "curl "
+    command += "-X POST "
+    command += "-H \"Accept: application/vnd.github+json\" "
+    command += f"-H \"Authorization: Bearer {token}\" "
+    command += "-H \"X-GitHub-Api-Version: 2022-11-28\" "
+    command += "-H \"Content-Type: application/octet-stream\" "
+    command += f"https://uploads.github.com/repos/gnuchu/pwgen-react/releases/{release_id}/assets?name={release_name} "
+    command += f"--data-binary \"@releases/{release_name}\""
     
+    try:
+        result = os.popen(command).read()
+        print(result)
+    except Exception as e:
+        raise(e)
 
 if __name__ == "__main__":
     release_number = sys.argv[1]
