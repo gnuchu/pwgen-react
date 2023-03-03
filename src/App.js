@@ -36,7 +36,7 @@ class App extends React.Component {
       strength: null,
       freeformStrength: null,
       freeformPassword: "",
-      numberOfWords: 5,
+      numberOfWords: 4,
       maxPasswordLength: 50
     }
   }
