@@ -24,7 +24,7 @@ function stringToBool(str) {
 function localRandom(max) {
   return Math.floor(Math.random() * max + 1)
 }
-const specialChars = "!#%()+,-./:;<=>?@[]^_`{|}~"
+const specialChars = "!@£$%&"
 
 function newPassphrase(params) {
   let phrase = ""
