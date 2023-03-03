@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 String.prototype.capitalise = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
 }
@@ -13,10 +15,17 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   next();
 });
- 
-const fs = require("fs");
-const words = JSON.parse(fs.readFileSync("/var/www/pwgen-react/words.json", { encoding: 'utf8', flag: 'r' }))
-//const words = JSON.parse(fs.readFileSync("../words.json", { encoding: 'utf8', flag: 'r' }))
+
+const LOCALTESTING = 0;
+var words;
+
+if(LOCALTESTING) {
+  words = JSON.parse(fs.readFileSync("../words.json", { encoding: 'utf8', flag: 'r' }))
+}
+else {
+  words = JSON.parse(fs.readFileSync("/var/www/pwgen-react/words.json", { encoding: 'utf8', flag: 'r' }))
+}
+
 function stringToBool(str) {
   return (str === 'true')
 } 
@@ -33,6 +42,7 @@ function newPassphrase(params) {
   const numbers = stringToBool(params.numbers)
   const special = stringToBool(params.special)
   let number_of_words = parseInt(params.words)
+  let max_length = parseInt(params.maxLength)
   
   for(i=0; i<number_of_words; i++) {
     j = localRandom(words.words.length)
@@ -60,6 +70,10 @@ function newPassphrase(params) {
   if(numbers) {
     let r = localRandom(1000)
     phrase += r.toString()
+  }
+
+  if (phrase.length > max_length) {
+    phrase = phrase.slice(-max_length)
   }
 
   return phrase
