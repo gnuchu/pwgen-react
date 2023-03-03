@@ -1,22 +1,21 @@
 import React from 'react';
 import './App.css';
 
+
 const LOCALTESTING = 0;
 
 let copyButtonUnchecked = "<i class='bi bi-clipboard'></i>";
 let copyButtonChecked = "<i class='bi bi-clipboard-check'></i>";
 
-const options = [
-  { value: 1, label: '1' },
-  { value: 2, label: '2' },
-  { value: 3, label: '3' },
-  { value: 4, label: '4' },
-  { value: 5, label: '5' },
-  { value: 6, label: '6' },
-  { value: 7, label: '7' },
-  { value: 8, label: '8' },
-  { value: 9, label: '9' },
-]
+const options = [];
+for(let i = 1; i<10; i++) {
+  options.push({ value:i, label: i});
+}
+
+const maxPasswordOptions = [];
+for (let i = 5; i<100; i++) {
+  maxPasswordOptions.push({ label:i, value:i });
+}
 
 function passwordStrength(password) {
   const zxcvbn = require('zxcvbn');
@@ -38,6 +37,7 @@ class App extends React.Component {
       freeformStrength: null,
       freeformPassword: "",
       numberOfWords: 5,
+      maxPasswordLength: 50
     }
   }
 
@@ -56,10 +56,10 @@ class App extends React.Component {
     var url = ""
 
     if( LOCALTESTING ) {
-      url = `http://localhost:3001/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}`
+      url = `http://localhost:3001/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}&maxLength=${this.state.maxPasswordLength}`
     }
     else {
-      url = `https://qasxed.uk:8443/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}`
+      url = `https://qasxed.uk:8443/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}&maxLength=${this.state.maxPasswordLength}`
     }
 
     fetch(url)
@@ -120,6 +120,15 @@ class App extends React.Component {
   onNumberChange = event => {
     this.setState({
       numberOfWords: event.target.value
+    },
+    () => {
+      this.getNewPassword();
+    })
+  }
+
+  onMaxxPasswordLengthChange = event => {
+    this.setState({
+      maxPasswordLength: event.target.value
     },
     () => {
       this.getNewPassword();
@@ -280,6 +289,17 @@ class App extends React.Component {
                 {options.map(({ value, label }, index) => <option value={value} key={value}>{label}</option>)}
               </select>
             </div>
+
+            <div className="">
+              <select
+                value={this.state.maxPasswordLength}
+                onChange={this.onMaxxPasswordLengthChange}
+                className="form-select form-select-sm">
+
+                {maxPasswordOptions.map(({ value, label }, index) => <option value={value} key={value}>{label}</option>)}
+              </select>
+            </div>
+            
           </div>
         </div>
         
