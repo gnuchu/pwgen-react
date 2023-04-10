@@ -18,7 +18,7 @@ def main(release_number):
     
 
     version = f"v1.0.{release_number}"
-    release_name = f"pwgen_react_{version}.zip"
+    release_name = f"pwgen_react_web{version}.zip"
     release = os.path.join(release_directory, release_name)
 
     try:
@@ -48,8 +48,6 @@ def main(release_number):
         raise(e)
 
     release_id = release_info['id']
-    upload_url = release_info['upload_url']
-    target = f"/repos/gnuchu/pwgen-react/releases/{release_id}/assets?name={release_name}"
 
     command = ""
     command += "curl "
