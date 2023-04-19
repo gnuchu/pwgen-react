@@ -1,17 +1,12 @@
 {
   "name": "pwgen-react",
-  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^4.5.3",
     "bootstrap-icons": "^1.4.0",
-    "concurrently": "^6.2.0",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
     "popper": "^1.0.1",
@@ -23,20 +18,10 @@
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
-    "start": "( node server/index.js & ) && react-scripts start",
-    "frontend": "react-scripts start",
-    "backend": "node server/index.js",
-    "startw": "concurrently \"yarn run backend\" \"yarn run frontend\"",
+    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "release": "scripts/release.py"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "release": "scripts/release.py",
+    "test": "scripts/test.sh"
   },
   "browserslist": {
     "production": [
@@ -47,7 +32,8 @@
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 safari version",
+      "last 1  opera version"
     ]
   }
 }
