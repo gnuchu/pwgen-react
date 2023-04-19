@@ -59,7 +59,7 @@ class App extends React.Component {
       url = `http://localhost:3001/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}&maxLength=${this.state.maxPasswordLength}`
     }
     else {
-      url = `https://qasxed.uk:8443/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}&maxLength=${this.state.maxPasswordLength}`
+      url = `https://pwgen-server.fly.dev/api/v1/passphrase?capitalise=${this.state.capitalise}&numbers=${this.state.numbers}&spaces=${this.state.spaces}&special=${this.state.special}&words=${this.state.numberOfWords}&maxLength=${this.state.maxPasswordLength}`
     }
 
     fetch(url)
